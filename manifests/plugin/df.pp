@@ -14,7 +14,7 @@ class collectd::plugin::df (
 		pluginsection   => "false",
 	}
 
-	partition { "/": 
+	partition { "/":
 		device => $root_device,
 		fs_type => $root_fs_type,
 		ignore_selected => $root_ignore_selected,
@@ -35,7 +35,7 @@ class collectd::plugin::df (
 		$fname = regsubst($pname, '[^a-zA-Z0-9-]', '_', 'G')
 
 		# section erstellen
-		collectd::plugin::section{ "${fname}": 
+		collectd::plugin::section{ "${fname}":
 			plugin => "df",
 			startprio => 222,
 			endprio => 222

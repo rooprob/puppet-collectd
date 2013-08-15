@@ -3,8 +3,7 @@
 #####
 
 class collectd::plugin::fscache {
-        collectd::plugin::include{"fscache":
-                pluginsection   => "false",
-        }
+  collectd::plugin::include{"fscache":
+    pluginsection   => "false",
+  }
 } # class collectd::plugin::fscache
-

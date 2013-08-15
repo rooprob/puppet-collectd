@@ -3,7 +3,7 @@
 #####
 
 class collectd::plugin::memory{
-	collectd::plugin::include{"memory":
-		pluginsection   => "false",
-	}
+  collectd::plugin::include{"memory":
+    pluginsection   => "false",
+  }
 } # collectd::plugin::memory

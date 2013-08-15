@@ -3,8 +3,8 @@
 #####
 
 class collectd::plugin::load{
-	collectd::plugin::include{"load":
-		pluginsection   => "false",
-	}
+  collectd::plugin::include{"load":
+    pluginsection   => "false",
+  }
 } # collectd::plugin::load
 
