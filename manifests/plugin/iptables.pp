@@ -8,7 +8,7 @@ class collectd::plugin::iptables (){
   }
 
   define counter($table, $comment) {
-    concat::fragment { "222_${table}_${title}_222":
+    concat_fragment { "222_${table}_${title}_222":
       order   => 222,
       target  => "${collectd::conf_path}/plugins/iptables.conf",
       content => inline_template("Chain ${table} ${comment}\n"),

@@ -3,8 +3,8 @@
 #####
 
 class collectd::plugin::df (
-  $root_device	= "/dev/simfs",
-  $root_fs_type	= "simfs",
+  $root_device  = "/dev/simfs",
+  $root_fs_type  = "simfs",
   $root_ignore_selected = false,
   $root_report_reserved = false,
   $root_report_inodes   = false
@@ -43,9 +43,9 @@ class collectd::plugin::df (
     # defaultwerte
     Collectd::Plugin::Confline { order   => 222, plugin  => "df" }
     # config erstellen
-    collectd::plugin::confline{"${fname}_device": 		content => "  Device \"${device}\"" }
-    collectd::plugin::confline{"${fname}_mountpoint":	content => "  MountPoint \"${name}\"" }
-    collectd::plugin::confline{"${fname}_fstype": 		content => "  FSType \"${fs_type}\"" }
+    collectd::plugin::confline{"${fname}_device":     content => "  Device \"${device}\"" }
+    collectd::plugin::confline{"${fname}_mountpoint":  content => "  MountPoint \"${name}\"" }
+    collectd::plugin::confline{"${fname}_fstype":     content => "  FSType \"${fs_type}\"" }
     collectd::plugin::confline{"${fname}_ignore_selected":
       content => $ignore_selected ? {
         true    => "  IgnoreSelected true" ,

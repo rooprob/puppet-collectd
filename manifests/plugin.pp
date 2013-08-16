@@ -14,7 +14,10 @@ class collectd::plugin {
     # Config-file of the plugin that contain all configurations of a special plugin
     concat{ "${collectd::conf_path}/plugins/${name}.conf":
       notify  => Service['collectd'],
-      require => Package["collectd"],
+      require => [
+        File["${collectd::conf_path}/plugins"],
+        Package["collectd"],
+      ],
       mode    => '0400',
       owner   => root,
       group   => root,
@@ -22,7 +25,7 @@ class collectd::plugin {
 
     if $extra_content == false {
       /* Easy plugin-loading via LoadPlugin-row */
-      concat::fragment { "000_${name}_load":
+      concat_fragment { "000_${name}_load":
         order   => 000,
         target  => "${collectd::conf_path}/plugins/${name}.conf",
         content => inline_template("LoadPlugin \"${name}\" \n"),
@@ -30,7 +33,7 @@ class collectd::plugin {
       }
     } else {
         /* creates <LoadPlugin XYZ>-section */
-        concat::fragment { "000_${name}_load":
+        concat_fragment { "000_${name}_load":
           order   => 000,
           target  => "${collectd::conf_path}/plugins/${name}.conf",
           content => inline_template("<LoadPlugin ${name}>\n${extra_content}\n</LoadPlugin>\n"),
@@ -48,13 +51,13 @@ class collectd::plugin {
   #
   define section ($plugin,$startprio=111,$endprio=999) {
     include collectd
-    concat::fragment { "${startprio}_${name}_0header":
+    concat_fragment { "${startprio}_${name}_0header":
       order   => $startprio,
       target  => "${collectd::conf_path}/plugins/${plugin}.conf",
       content => inline_template("<Plugin \"${plugin}\"> \n"),
       #require => Concat["${collectd::conf_path}/plugins/${plugin}.conf"],
     }
-    concat::fragment { "${endprio}_${name}_~footer":
+    concat_fragment { "${endprio}_${name}_~footer":
       order   => $endprio,
       target  => "${collectd::conf_path}/plugins/${plugin}.conf",
       content => inline_template("</Plugin> \n"),
@@ -68,11 +71,10 @@ class collectd::plugin {
     $content
   ){
     include collectd
-    concat::fragment { "${order}_${name}":
+    concat_fragment { "${order}_${name}":
       order   => $order,
       target  => "${collectd::conf_path}/plugins/${plugin}.conf",
       content => inline_template("${content}\n"),
-      #require => Concat["${collectd::conf_path}/plugins/${plugin}.conf"],
     }
   } # define confline
 
@@ -84,9 +86,9 @@ class collectd::plugin {
     $content,
   ) {
     $safename = regsubst($name, '[\:\.\[\]\<\>/\+\*\\\(\)\s|]+', '1', 'G')
-    concat::fragment { "${order}_${safename}":
-      order  => $order,
-      target => "${collectd::conf_path}/plugins/${plugin}.conf",
+    concat_fragment { "${order}_${safename}":
+      order   => $order,
+      target  => "${collectd::conf_path}/plugins/${plugin}.conf",
       content => $content,
     }
   }

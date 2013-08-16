@@ -19,14 +19,14 @@ class collectd::plugin::apache {
 
     # Since debian squeeze --> create instance-tag
     if $::lsbdistid == 'Debian' and $::lsbmajdistrelease > 5 {
-      concat::fragment { "222_${apache_filename}_111":
+      concat_fragment { "222_${apache_filename}_111":
         order   => 222,
         target  => "${collectd::conf_path}/plugins/apache.conf",
         content => inline_template("<Instance \"${apache_filename}\"> \n"),
       }
     }
 
-    concat::fragment { "222_${apache_filename}_222":
+    concat_fragment { "222_${apache_filename}_222":
       order   => 222,
       target  => "${collectd::conf_path}/plugins/apache.conf",
       content => inline_template("URL \"${url}\" \n"),
@@ -34,7 +34,7 @@ class collectd::plugin::apache {
 
     if $auth_user != "" {
 
-      concat::fragment { "222_${apache_filename}_333":
+      concat_fragment { "222_${apache_filename}_333":
         order   => 222,
         target  => "${collectd::conf_path}/plugins/apache.conf",
         content => inline_template("User \"${auth_user}\" \n"),
@@ -43,7 +43,7 @@ class collectd::plugin::apache {
 
     if $auth_password != "" {
 
-      concat::fragment { "222_${apache_filename}_444":
+      concat_fragment { "222_${apache_filename}_444":
         order   => 222,
         target  => "${collectd::conf_path}/plugins/apache.conf",
         content => inline_template("Password \"${auth_password}\" \n"),
@@ -52,7 +52,7 @@ class collectd::plugin::apache {
 
     # Since debian squeeze --> create instance-tag
     if $::lsbdistid == 'Debian' and $::lsbmajdistrelease > 5 {
-      concat::fragment { "222_${apache_filename}_999":
+      concat_fragment { "222_${apache_filename}_999":
         order   => 222,
         target  => "${collectd::conf_path}/plugins/apache.conf",
         content => inline_template("</Instance> \n"),

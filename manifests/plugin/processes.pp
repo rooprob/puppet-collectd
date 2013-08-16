@@ -9,7 +9,7 @@ class collectd::plugin::processes() {
   }
 
   define process() {
-    concat::fragment { "222_${title}_222":
+    concat_fragment { "222_${title}_222":
       order   => 222,
       target  => "${collectd::conf_path}/plugins/processes.conf",
       content => inline_template("Process \"${title}\"\n"),

@@ -19,7 +19,7 @@ define collectd::config_block($config_block,
     }
   }
 
-  concat::fragment { $instance:
+  concat_fragment { $instance:
     target  => $filename,
     order   => $order,
     content => template($template)
